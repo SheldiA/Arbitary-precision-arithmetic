@@ -1,0 +1,8 @@
+D:\Project c#\Arbitrary-precision arithmetic\Arbitrary-precision arithmetic\bin\Debug\Arbitrary-precision arithmetic.exe
+D:\Project c#\Arbitrary-precision arithmetic\Arbitrary-precision arithmetic\bin\Debug\Arbitrary-precision arithmetic.pdb
+D:\Project c#\Arbitrary-precision arithmetic\Arbitrary-precision arithmetic\obj\x86\Debug\Arbitrary_precision_arithmetic.FormMain.resources
+D:\Project c#\Arbitrary-precision arithmetic\Arbitrary-precision arithmetic\obj\x86\Debug\Arbitrary_precision_arithmetic.Properties.Resources.resources
+D:\Project c#\Arbitrary-precision arithmetic\Arbitrary-precision arithmetic\obj\x86\Debug\Arbitrary-precision arithmetic.csproj.GenerateResource.Cache
+D:\Project c#\Arbitrary-precision arithmetic\Arbitrary-precision arithmetic\obj\x86\Debug\Arbitrary-precision arithmetic.exe
+D:\Project c#\Arbitrary-precision arithmetic\Arbitrary-precision arithmetic\obj\x86\Debug\Arbitrary-precision arithmetic.pdb
+D:\Project c#\Arbitrary-precision arithmetic\Arbitrary-precision arithmetic\obj\x86\Debug\Arbitrary-precision arithmetic.csprojResolveAssemblyReference.cache
