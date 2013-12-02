@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Numerics;
 
 namespace Arbitrary_precision_arithmetic
 {
@@ -22,6 +23,23 @@ namespace Arbitrary_precision_arithmetic
                 return number;
             
         }
+
+        public byte[] DeleteZero(byte[] arr)
+        {
+            for (int i = arr.Length - 1; i >= 0; --i)
+                if (arr[i] != 0)
+                {
+                    if (i != arr.Length - 1)
+                    {
+                        byte[] temp = new byte[i + 1];
+                        Array.Copy(arr, temp, i + 1);
+                        arr = temp;
+                    }
+                    break;
+                }
+            return arr;
+        }
+
         public byte[] Add(byte[] left,byte[] right,byte numeralSystem)
         {
             int operandsLength = Math.Max(left.Length,right.Length);
@@ -39,17 +57,7 @@ namespace Arbitrary_precision_arithmetic
                     remainder = 0;
             result[operandsLength] = remainder;
 
-            for (int i = result.Length - 1; i >= 0; --i)
-                if (result[i] != 0)
-                {
-                    if (i != result.Length - 1)
-                    {
-                        byte[] temp = new byte[i + 1];
-                        Array.Copy(result, temp, i + 1);
-                        result = temp;
-                    }
-                    break;
-                }
+            result = DeleteZero(result);
             return result;
         }
 
@@ -60,6 +68,17 @@ namespace Arbitrary_precision_arithmetic
             byte[] rightOperand = Add0ToEnd(right, operandsLength);
             byte[] result = new byte[operandsLength];
             int currResult = 0;
+            int sign = 1;//1 = + ; 2 = -
+            BigInteger leftBig = new BigInteger(leftOperand);
+            BigInteger rightBig = new BigInteger(rightOperand);
+            if (BigInteger.Compare(leftBig, rightBig) < 0)
+            {
+                byte[] temp = leftOperand;
+                leftOperand = rightOperand;
+                rightOperand = temp;
+                sign = 2;
+            }
+            
             for (int i = 0; i < operandsLength; ++i)
             {
                 if ((currResult = leftOperand[i] - rightOperand[i]) < 0)
@@ -75,18 +94,11 @@ namespace Arbitrary_precision_arithmetic
                 result[i] = (byte)currResult;
             }
 
-            for (int i = result.Length - 1; i >= 0; --i)
-                if (result[i] != 0)
-                {
-                    if (i != result.Length - 1)
-                    {
-                        byte[] temp = new byte[i + 1];
-                        Array.Copy(result, temp, i + 1);
-                        result = temp;
-                    }
-                    break;
-                }
-       
+            result = DeleteZero(result);
+            byte[] temp1 = new byte[result.Length + 1];            
+            Array.Copy(result, temp1, result.Length);
+            temp1[temp1.Length - 1] = (byte)sign;
+            result = temp1;
             return result;
         }
 
@@ -111,25 +123,12 @@ namespace Arbitrary_precision_arithmetic
                 result[j + leftLength] = remainder;
             }
 
-            
-            for (int i = result.Length - 1; i >= 0; --i)
-                if (result[i] != 0)
-                {
-                    if (i != result.Length - 1)
-                    {
-                        byte[] temp = new byte[i + 1];
-                        Array.Copy(result, temp, i + 1);
-                        result = temp;
-                    }
-                    break;
-                }
+            result = DeleteZero(result);
             return result;
         }
 
         public byte[] Divide(byte[] leftOperand, byte[] rightOperand, byte numeralSystem)
         {
-            //byte[] leftOp = { 5, 4, 1, 8, 7, 6 };
-            //byte[] rightOp = { 3, 2, 1 };
             int leftLength = leftOperand.Length;
             int rightLength = rightOperand.Length;
             byte[] coeff = new byte[1];
@@ -156,7 +155,7 @@ namespace Arbitrary_precision_arithmetic
                 {
                     --quotient;
                     remainder += right[rightLength - 2];
-                    if ((remainder < numeralSystem) || (quotient * right[rightLength - 2] > numeralSystem * remainder + left[j + rightLength - 2]))
+                    if ((remainder < numeralSystem - 1) || (quotient * right[rightLength - 2] > numeralSystem * remainder + left[j + rightLength - 2]))
                     {
                         --quotient;
                         remainder += right[rightLength - 2];
@@ -175,26 +174,35 @@ namespace Arbitrary_precision_arithmetic
                 for (; i < left.Length;++i )
                     tempLeft[i] = 0;
                 left = Substraction(left, tempLeft, numeralSystem);
-                /*for (int i = j,k = 0; i <= j + rightLength; ++i,++k)
+                
+                if (left[left.Length - 1] == 2)
                 {
-                    left[i] -= right[k];
-                    if (left[i] < 0)
-                        flagNegative = true;
-                }*/
+                    flagNegative = true;
+                }
+                else
+                    flagNegative = false;
+                Array.Resize(ref left,left.Length  - 1);
+                left = Add0ToEnd(left, leftLength);
+             
                 result[j] = quotient;
-                /*if (flagNegative)
+                if (flagNegative)
                 {
-                    byte[] temp1 = {1,0};
-                    byte[] temp2 = { 1, 0 };
-                    for (int i = 0; i <= rightLength + 1; ++i)
-                        temp2 = Multiply(temp2,temp1,numeralSystem);
-                    left = Add(left,temp2,numeralSystem);
+                    tempRight = new byte[leftLength];
+                    for (i = 0; i < j; ++i)
+                        tempRight[i] = 0;
+                    for (int k = 0; k < right.Length; ++i, ++k)
+                        tempRight[i] = right[k];
+                    for (; i < tempRight.Length; ++i)
+                        tempRight[i] = 0;
+                    left = Substraction(tempRight,left,numeralSystem);
+                    Array.Resize(ref left, left.Length - 1);
+                    left = Add0ToEnd(left, leftLength);
                     --result[j];
-
-                }*/
+                }
 
             }
 
+            result = DeleteZero(result);
             return result;
         }
     }

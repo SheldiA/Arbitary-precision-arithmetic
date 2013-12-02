@@ -67,7 +67,10 @@ namespace Arbitrary_precision_arithmetic
                 byte[] multyplying1 = Multiply(left1,right1,numeralSystem);
                 byte[] temp = Multiply(operation.Add(left0,left1,numeralSystem),operation.Add(right0,right1,numeralSystem),numeralSystem);
                 byte[] temp1 = operation.Substraction(temp, multiplying0, numeralSystem);
-                byte[] temp2 = MultiplyByPowerOf10(operation.Substraction(temp1,multyplying1,numeralSystem),power);
+                Array.Resize(ref temp1,temp1.Length - 1);
+                byte[] temp4 = operation.Substraction(temp1, multyplying1, numeralSystem);
+                Array.Resize(ref temp4,temp4.Length - 1);
+                byte[] temp2 = MultiplyByPowerOf10(temp4,power);
                 byte[] temp3 = operation.Add(temp2, MultiplyByPowerOf10(multyplying1, 2 * power), numeralSystem);
                 result = operation.Add(multiplying0,temp3,numeralSystem);
             }

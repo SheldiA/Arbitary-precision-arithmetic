@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.gb_operations = new System.Windows.Forms.GroupBox();
+            this.rb_karatsubaMultiplication = new System.Windows.Forms.RadioButton();
             this.rb_dividing = new System.Windows.Forms.RadioButton();
             this.rb_multiplication = new System.Windows.Forms.RadioButton();
             this.rb_addition = new System.Windows.Forms.RadioButton();
@@ -42,7 +43,8 @@
             this.tb_leftSign = new System.Windows.Forms.TextBox();
             this.tb_rightSign = new System.Windows.Forms.TextBox();
             this.tb_resultSign = new System.Windows.Forms.TextBox();
-            this.rb_karatsubaMultiplication = new System.Windows.Forms.RadioButton();
+            this.lb_sign = new System.Windows.Forms.Label();
+            this.lb_runningTime = new System.Windows.Forms.Label();
             this.gb_operations.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,6 +61,18 @@
             this.gb_operations.TabStop = false;
             this.gb_operations.Text = "Choose operation:";
             // 
+            // rb_karatsubaMultiplication
+            // 
+            this.rb_karatsubaMultiplication.AutoSize = true;
+            this.rb_karatsubaMultiplication.Location = new System.Drawing.Point(15, 75);
+            this.rb_karatsubaMultiplication.Name = "rb_karatsubaMultiplication";
+            this.rb_karatsubaMultiplication.Size = new System.Drawing.Size(136, 17);
+            this.rb_karatsubaMultiplication.TabIndex = 3;
+            this.rb_karatsubaMultiplication.TabStop = true;
+            this.rb_karatsubaMultiplication.Text = "Karatsuba multiplication";
+            this.rb_karatsubaMultiplication.UseVisualStyleBackColor = true;
+            this.rb_karatsubaMultiplication.CheckedChanged += new System.EventHandler(this.RadioButton_Checked);
+            // 
             // rb_dividing
             // 
             this.rb_dividing.AutoSize = true;
@@ -69,6 +83,7 @@
             this.rb_dividing.TabStop = true;
             this.rb_dividing.Text = "Dividing";
             this.rb_dividing.UseVisualStyleBackColor = true;
+            this.rb_dividing.CheckedChanged += new System.EventHandler(this.RadioButton_Checked);
             // 
             // rb_multiplication
             // 
@@ -80,6 +95,7 @@
             this.rb_multiplication.TabStop = true;
             this.rb_multiplication.Text = "Multiplication";
             this.rb_multiplication.UseVisualStyleBackColor = true;
+            this.rb_multiplication.CheckedChanged += new System.EventHandler(this.RadioButton_Checked);
             // 
             // rb_addition
             // 
@@ -92,6 +108,7 @@
             this.rb_addition.TabStop = true;
             this.rb_addition.Text = "Addition";
             this.rb_addition.UseVisualStyleBackColor = true;
+            this.rb_addition.CheckedChanged += new System.EventHandler(this.RadioButton_Checked);
             // 
             // tb_leftOperand
             // 
@@ -175,22 +192,30 @@
             this.tb_resultSign.TabIndex = 10;
             this.tb_resultSign.Text = "+";
             // 
-            // rb_karatsubaMultiplication
+            // lb_sign
             // 
-            this.rb_karatsubaMultiplication.AutoSize = true;
-            this.rb_karatsubaMultiplication.Location = new System.Drawing.Point(15, 75);
-            this.rb_karatsubaMultiplication.Name = "rb_karatsubaMultiplication";
-            this.rb_karatsubaMultiplication.Size = new System.Drawing.Size(136, 17);
-            this.rb_karatsubaMultiplication.TabIndex = 3;
-            this.rb_karatsubaMultiplication.TabStop = true;
-            this.rb_karatsubaMultiplication.Text = "Karatsuba multiplication";
-            this.rb_karatsubaMultiplication.UseVisualStyleBackColor = true;
+            this.lb_sign.AutoSize = true;
+            this.lb_sign.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lb_sign.Location = new System.Drawing.Point(199, 46);
+            this.lb_sign.Name = "lb_sign";
+            this.lb_sign.Size = new System.Drawing.Size(0, 20);
+            this.lb_sign.TabIndex = 11;
+            // 
+            // lb_runningTime
+            // 
+            this.lb_runningTime.AutoSize = true;
+            this.lb_runningTime.Location = new System.Drawing.Point(334, 143);
+            this.lb_runningTime.Name = "lb_runningTime";
+            this.lb_runningTime.Size = new System.Drawing.Size(0, 13);
+            this.lb_runningTime.TabIndex = 12;
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(684, 188);
+            this.Controls.Add(this.lb_runningTime);
+            this.Controls.Add(this.lb_sign);
             this.Controls.Add(this.tb_resultSign);
             this.Controls.Add(this.tb_rightSign);
             this.Controls.Add(this.tb_leftSign);
@@ -228,6 +253,8 @@
         private System.Windows.Forms.TextBox tb_rightSign;
         private System.Windows.Forms.TextBox tb_resultSign;
         private System.Windows.Forms.RadioButton rb_karatsubaMultiplication;
+        private System.Windows.Forms.Label lb_sign;
+        private System.Windows.Forms.Label lb_runningTime;
     }
 }
 
