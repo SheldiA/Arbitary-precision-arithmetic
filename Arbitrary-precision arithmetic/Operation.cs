@@ -9,7 +9,7 @@ namespace Arbitrary_precision_arithmetic
     class Operation
     {
 
-        private byte[] Add0ToEnd(byte[] number, int length)
+        public byte[] Add0ToEnd(byte[] number, int length)
         {
             if (number.Length < length)
             {
@@ -26,6 +26,7 @@ namespace Arbitrary_precision_arithmetic
 
         public byte[] DeleteZero(byte[] arr)
         {
+            bool flagFindingNotZero = false;
             for (int i = arr.Length - 1; i >= 0; --i)
                 if (arr[i] != 0)
                 {
@@ -35,8 +36,14 @@ namespace Arbitrary_precision_arithmetic
                         Array.Copy(arr, temp, i + 1);
                         arr = temp;
                     }
+                    flagFindingNotZero = true;
                     break;
                 }
+            if (!flagFindingNotZero)
+            {
+                Array.Resize(ref arr,1);
+                arr[0] = 0;
+            }
             return arr;
         }
 
@@ -149,20 +156,26 @@ namespace Arbitrary_precision_arithmetic
             for (int j = (leftLength - rightLength); j >= 0; --j)
             {
                 flagNegative = false;
+                if (j == 4)
+                    flagNegative = false;
                 quotient = (byte)((left[j + rightLength] * numeralSystem + left[j + rightLength - 1]) / right[rightLength - 1]);
                 remainder = (byte)((left[j + rightLength] * numeralSystem + left[j + rightLength - 1]) % right[rightLength - 1]);
                 if ((quotient == numeralSystem) || (quotient * right[rightLength - 2] > numeralSystem * remainder + left[j + rightLength - 2]))
                 {
                     --quotient;
                     remainder += right[rightLength - 2];
-                    if ((remainder < numeralSystem - 1) || (quotient * right[rightLength - 2] > numeralSystem * remainder + left[j + rightLength - 2]))
+                    if ((remainder < numeralSystem/* - 1*/) && (quotient * right[rightLength - 2] > numeralSystem * remainder + left[j + rightLength - 2]))
                     {
                         --quotient;
                         remainder += right[rightLength - 2];
                     }
-                }                
+                }
 
+
+                if (quotient > numeralSystem - 1)
+                    quotient = (byte)(numeralSystem - 1);
                 byte[] temp = { quotient};
+
 
                 byte[] tempRight = Multiply(right, temp, numeralSystem);
                 byte[] tempLeft = new byte[left.Length];

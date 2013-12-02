@@ -16,17 +16,18 @@ namespace Arbitrary_precision_arithmetic
 
         private byte[] UsualMultiply(byte[] a, byte[] b)
         {
-            string left = "";
-            string right = "";
-            for (int i = a.Length - 1; i >= 0; --i)
-                left += a[i];
-            for (int i = b.Length - 1; i >= 0; --i)
-                right += b[i];
-            string strResult = Convert.ToString((Convert.ToInt32(left) * Convert.ToInt32(right))); 
-            byte[] result = new byte[strResult.Length];
-            for (int i = 0; i < strResult.Length; ++i)
-                result[i] = (byte)Char.GetNumericValue(strResult[i]);
-            Array.Reverse(result);
+            byte[] result = {};
+                string left = "";
+                string right = "";
+                for (int i = a.Length - 1; i >= 0; --i)
+                    left += a[i];
+                for (int i = b.Length - 1; i >= 0; --i)
+                    right += b[i];
+                string strResult = Convert.ToString((Convert.ToInt32(left) * Convert.ToInt32(right)));
+                result = new byte[strResult.Length];
+                for (int i = 0; i < strResult.Length; ++i)
+                    result[i] = (byte)Char.GetNumericValue(strResult[i]);
+                Array.Reverse(result);
             return result;
         }
 
@@ -46,10 +47,12 @@ namespace Arbitrary_precision_arithmetic
         public byte[] Multiply(byte[] leftOperand, byte[] rightOperand, byte numeralSystem)
         {
             byte[] result = { };
-
+            leftOperand = operation.Add0ToEnd(leftOperand,Math.Max(leftOperand.Length,rightOperand.Length));
+            rightOperand = operation.Add0ToEnd(rightOperand, Math.Max(leftOperand.Length, rightOperand.Length));
             if (leftOperand.Length <= minCountForMultyplying && rightOperand.Length <= minCountForMultyplying)
             {
-                result = UsualMultiply(leftOperand,rightOperand);
+                if(leftOperand.Length > 0 && rightOperand.Length > 0)
+                    result = UsualMultiply(leftOperand,rightOperand);
             }
             else
             {

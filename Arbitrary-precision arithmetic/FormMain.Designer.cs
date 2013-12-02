@@ -44,7 +44,6 @@
             this.tb_rightSign = new System.Windows.Forms.TextBox();
             this.tb_resultSign = new System.Windows.Forms.TextBox();
             this.lb_sign = new System.Windows.Forms.Label();
-            this.lb_runningTime = new System.Windows.Forms.Label();
             this.gb_operations.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -201,20 +200,11 @@
             this.lb_sign.Size = new System.Drawing.Size(0, 20);
             this.lb_sign.TabIndex = 11;
             // 
-            // lb_runningTime
-            // 
-            this.lb_runningTime.AutoSize = true;
-            this.lb_runningTime.Location = new System.Drawing.Point(334, 143);
-            this.lb_runningTime.Name = "lb_runningTime";
-            this.lb_runningTime.Size = new System.Drawing.Size(0, 13);
-            this.lb_runningTime.TabIndex = 12;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(684, 188);
-            this.Controls.Add(this.lb_runningTime);
             this.Controls.Add(this.lb_sign);
             this.Controls.Add(this.tb_resultSign);
             this.Controls.Add(this.tb_rightSign);
@@ -254,7 +244,6 @@
         private System.Windows.Forms.TextBox tb_resultSign;
         private System.Windows.Forms.RadioButton rb_karatsubaMultiplication;
         private System.Windows.Forms.Label lb_sign;
-        private System.Windows.Forms.Label lb_runningTime;
     }
 }
 
